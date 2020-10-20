@@ -40,7 +40,6 @@ app.get("/latency", verifyToken, checkToken, (req, res) => {
 
 app.get("/info", verifyToken, checkToken, (req, res) => {
   const { id, type } = jwt.verify(req.token, config.secret);
-  console.log(req.token);
   if (req.err) res.sendStatus(403);
   else res.status(200).json({ token: req.token, id, type });
 });

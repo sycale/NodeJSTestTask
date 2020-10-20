@@ -25,16 +25,20 @@ function checkToken(req, res, next) {
             if (err) req.err = true;
             else {
               client.query(
-                `INSERT INTO tokens (user_id, token) VALUES ('${data.id}', '${req.token}')`
-              );
-              jwt.sign(
-                { id: data.id, type: data.type },
-                config.secret,
-                { expiresIn: "10m" },
-                (err, newToken) => {
-                  if (err) throw new Error(err);
-                  req.token = newToken;
-                  next();
+                `INSERT INTO tokens (user_id, token) VALUES ('${data.id}', '${req.token}')`,
+                (err, result) => {
+                  if (err) req.err = true;
+                  else
+                    jwt.sign(
+                      { id: data.id, type: data.type },
+                      config.secret,
+                      { expiresIn: "10m" },
+                      (err, newToken) => {
+                        if (err) throw new Error(err);
+                        req.token = newToken;
+                        next();
+                      }
+                    );
                 }
               );
             }
