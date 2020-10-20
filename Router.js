@@ -34,6 +34,9 @@ apiRouter.post("/signin", (req, res) => {
               config.secret,
               { expiresIn: "10m" },
               (err, token) => {
+                // client.query(
+                //   `INSERT INTO tokens (user_id, token) VALUES ('${user.id}', '${token}')`
+                // );
                 res.json({ token });
               }
             );
@@ -72,6 +75,9 @@ apiRouter.post("/signup", (req, res) => {
           { expiresIn: "10m" },
           (err, token) => {
             if (err) throw new Error(err);
+            // client.query(
+            //   `INSERT INTO tokens (user_id, token) VALUES ('${user.id}', '${token}')`
+            // );
             res.json({ token });
           }
         );
